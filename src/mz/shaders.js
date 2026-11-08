@@ -280,7 +280,7 @@ const SHAPES = {
     beam: ["uniform float uHalfWidth;", BEAM, BEAM_RAY, "u.y"],
 };
 
-// The fragment shader for a shape, with or without shadows, giving colour
+// The fragment shader for a shape, with or without shadows, giving color
 // or weights (see OUTPUTS). maxCasters is how many characters can shadow one
 // light, which the device's uniform limit decides (0 for none).
 export function lightFragmentFor(shape, shadowed, maxCasters = 0, output = "color") {

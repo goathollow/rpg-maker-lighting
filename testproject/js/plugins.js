@@ -3,5 +3,5 @@
 var $plugins =
 [
 {"name":"LightingTestHarness","status":true,"description":"[Test only] Boots straight into a map for automated tests.","parameters":{}},
-{"name":"GH_Lighting","status":true,"description":"Dynamic lighting: day and night, coloured lights, cones, beams, flicker and shadows.","parameters":{"lightResolution":"0.5","maxBrightness":"2","globalLight":""}}
+{"name":"GH_Lighting","status":true,"description":"Dynamic lighting: day and night, colored lights, cones, beams, flicker and shadows.","parameters":{"lightResolution":"0.5","maxBrightness":"2","globalLight":""}}
 ];

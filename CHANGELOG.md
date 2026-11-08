@@ -8,7 +8,7 @@ The first public release.
   command and kept in saves, and `<ambient>` for maps with their own light
   (interiors, caves). Presets: Day, Evening, Night, Dungeon, Cave, Darkness.
 - **Lights** on events (note or page comment) and the player: point, cone
-  (flashlights) and beam (sunbeams through windows) shapes, any colour,
+  (flashlights) and beam (sunbeams through windows) shapes, any color,
   with presets such as Torch, Lantern, Candle, Lamp and Flashlight. Lights
   fade out by day on their own, and can brighten the map up to Max
   Brightness.

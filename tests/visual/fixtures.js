@@ -107,7 +107,7 @@ export const snapHash = (page) => page.evaluate(() => window.__harnessSnapHash()
 // What the lighting layer should be drawing, read from the game: the map's
 // ambient, Max Brightness, the light buffer's resolution and margin, the
 // flicker clock of the last frame drawn, and
-// each light where it lands on screen, with its colour times its intensity,
+// each light where it lands on screen, with its color times its intensity,
 // its shape, its direction setting, its character's facing and its shadow
 // settings. For shadows: the map's casting tiles (null with shadows off),
 // how far the map was scrolled, and every character's shadow caster, as

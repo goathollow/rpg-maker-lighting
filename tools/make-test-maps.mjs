@@ -66,7 +66,7 @@ const clampByte = (v) => Math.max(0, Math.min(255, Math.round(v)));
 // A normal map pixel the way tools save it: x right, green up the image.
 export const normalPixel = ([x, y, z]) => [clampByte(128 + x * 127), clampByte(128 - y * 127), clampByte(128 + z * 127), 255];
 
-// Screen-space (y down) normals of a dome of radius r centred at (cx, cy).
+// Screen-space (y down) normals of a dome of radius r centered at (cx, cy).
 export function dome(x, y, cx, cy, r) {
     const dx = (x + 0.5 - cx) / r;
     const dy = (y + 0.5 - cy) / r;
@@ -100,7 +100,7 @@ export const sheetA5Normal = (x, y) => bevel(x, y, 48, 6);
 // Ocean is 816 pixels square: eight domes across, so they wrap seamlessly.
 export const parallaxNormal = (x, y) => dome(x % 102, y % 102, 51, 51, 46);
 
-const grey = (v) => [clampByte(v * 255), clampByte(v * 255), clampByte(v * 255), 255];
+const gray = (v) => [clampByte(v * 255), clampByte(v * 255), clampByte(v * 255), 255];
 
 function sizeOf(file) {
     const b = readFileSync(file);
@@ -140,12 +140,12 @@ export function makeTestMaps() {
     if (!existsSync(`${root}/img`)) return;
     make("characters", "People1", "Lab_People", {
         normal: (x, y) => normalPixel(peopleNormal(x, y)),
-        ao: (x, y) => grey(peopleAO(x, y)),
+        ao: (x, y) => gray(peopleAO(x, y)),
     });
     make("tilesets", "Inside_A5", "Lab_Inside_A5", { normal: (x, y) => normalPixel(sheetA5Normal(x, y)) });
     make("tilesets", "Inside_B", "Lab_Inside_B", {
         n: (x, y) => normalPixel(sheetBNormal(x, y)),
-        ao: (x, y) => grey(sheetBAO(x, y)),
+        ao: (x, y) => gray(sheetBAO(x, y)),
     });
     make("parallaxes", "Ocean", "Lab_Ocean", { normal: (x, y) => normalPixel(parallaxNormal(x, y)) });
     ensureTileset();

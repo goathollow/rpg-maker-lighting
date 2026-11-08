@@ -86,7 +86,7 @@ export function anyCasterIn(map, sat, x0, y0, x1, y1) {
 // The distance field of `map` ({ grid, width, height, loopX, loopY }), as
 // 8-bit texels: { data, texWidth, texHeight, density, tile, ...map }.
 // Distances are exact (to the edges of the tiles' squares) at each texel's
-// centre, worked out row by row: for each nearby row of tiles, the gap
+// center, worked out row by row: for each nearby row of tiles, the gap
 // across to that row's nearest caster, combined with the gap down to it.
 export function distanceField(map, { tile = 48, density = fieldDensity(map.width, map.height) } = {}) {
     const m = FIELD_MARGIN;

@@ -163,7 +163,7 @@ export function surfaceShading([nx, ny, nz], vx, vy, height) {
 }
 
 // The 0-1 brightness used as height for auto normal maps: the luma of a
-// colour already multiplied by its alpha, so a sprite's outline slopes down
+// color already multiplied by its alpha, so a sprite's outline slopes down
 // to the transparent pixels around it.
 export function autoHeight(r, g, b) {
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255;

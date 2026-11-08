@@ -1,7 +1,7 @@
 import { parseColor } from "./color.js";
 import { readString } from "./params.js";
 
-// Ambient light is the colour the whole map is multiplied by before lights
+// Ambient light is the color the whole map is multiplied by before lights
 // are added. White means unlit: the map draws exactly as without the plugin.
 //
 // There are two levels:
@@ -14,7 +14,7 @@ export function isUnlit(color) {
     return color[0] >= 1 && color[1] >= 1 && color[2] >= 1;
 }
 
-// Plugin Manager preset structs -> Map of lower-cased name to colour.
+// Plugin Manager preset structs -> Map of lower-cased name to color.
 export function buildAmbientPresets(structs, warn = () => {}) {
     const presets = new Map();
     for (const struct of structs) {
@@ -29,8 +29,8 @@ export function buildAmbientPresets(structs, warn = () => {}) {
     return presets;
 }
 
-// Text of an <ambient> tag or command -> colour, or null when blank or
-// unreadable. Accepts a preset name, a colour, or "off"/"none" for fully lit.
+// Text of an <ambient> tag or command -> color, or null when blank or
+// unreadable. Accepts a preset name, a color, or "off"/"none" for fully lit.
 export function resolveAmbient(text, presets, warn = () => {}) {
     const s = String(text ?? "").trim();
     if (!s) return null;
@@ -44,11 +44,11 @@ export function resolveAmbient(text, presets, warn = () => {}) {
 }
 
 // Ambient state is a plain object so it can live in the save file:
-//   color         current colour
-//   target        colour being faded to
+//   color         current color
+//   target        color being faded to
 //   duration      frames of fade left
 //   base          the map's own ambient for "reset", or null if it has none
-//   followGlobal  true while the colour tracks the global light
+//   followGlobal  true while the color tracks the global light
 //
 // `base` null means the state follows the global light, starting from
 // `globalColor`. The global light itself is a state with a fixed base.
@@ -63,7 +63,7 @@ export function createAmbient(base, globalColor = UNLIT) {
     };
 }
 
-// Fades to a fixed colour. A map that was following the global light stops
+// Fades to a fixed color. A map that was following the global light stops
 // following it until reset.
 export function fadeAmbient(state, target, duration) {
     state.followGlobal = false;
@@ -84,7 +84,7 @@ export function resetAmbient(state, duration, globalColor) {
 }
 
 // One frame: the same linear step MZ uses for Tint Screen. While following,
-// the target is the global light's current colour, so a map fades along
+// the target is the global light's current color, so a map fades along
 // with a global fade, or catches up with it after a reset.
 export function updateAmbient(state, globalColor) {
     if (state.followGlobal && globalColor) {

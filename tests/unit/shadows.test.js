@@ -25,7 +25,7 @@ function fieldOf(rows) {
     return distanceField({ grid, width, height, loopX: false, loopY: false }, { tile: TILE });
 }
 
-// The centre of tile (x, y), plus an offset in pixels.
+// The center of tile (x, y), plus an offset in pixels.
 const at = (x, y, dx = 0, dy = 0) => [(x + 0.5) * TILE + dx, (y + 0.5) * TILE + dy];
 
 // How much of `l`, at map pixel `from`, the point `to` sees. Characters are

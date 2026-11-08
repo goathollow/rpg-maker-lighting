@@ -6,7 +6,7 @@ import { warnOnce } from "./warn.js";
 
 // Lighting state lives on objects MZ already saves ($gameSystem, $gameMap,
 // events, the player), so it survives save/load with no extra work. Only
-// plain colours and the text of commands are saved; resolved lights are
+// plain colors and the text of commands are saved; resolved lights are
 // cached in a WeakMap, which is never saved and is rebuilt after loading.
 export function installStateHooks(settings) {
     const lightCache = new WeakMap();

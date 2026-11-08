@@ -3,7 +3,7 @@
 //
 // Each frame of a sprite is drawn into a square slot OUTLINE_SLOT texels
 // across, its longer side filling the slot, and kept as a signed distance
-// field: per texel, the distance from its centre to the outline of the
+// field: per texel, the distance from its center to the outline of the
 // frame's opaque pixels (alpha at least half), negative inside, in slot
 // texels. Values are clamped to OUTLINE_RANGE and stored in 8 bits. The
 // slots sit OUTLINE_COLUMNS to a row in one texture, which the shadowed light

@@ -1,7 +1,7 @@
 import { AUTO_NORMAL_SCALE, MAX_SHADING } from "../core/surfaces.js";
 import { shapeParts } from "./shaders.js";
 
-// Shaders for normal and AO maps (src/core/surfaces.js has the maths, line
+// Shaders for normal and AO maps (src/core/surfaces.js has the math, line
 // for line). GLSL ES 1.00, like everything else.
 //
 // The surface buffer is a full-resolution copy of the map's layout holding,
@@ -43,7 +43,7 @@ vec2 encodeNormal(vec3 n) {
 }
 `;
 
-// autoHeight() and autoNormal(): `tap` reads the colour dx, dy texels away.
+// autoHeight() and autoNormal(): `tap` reads the color dx, dy texels away.
 const autoNormal = (tap) => `
 float autoHeight(vec4 c) {
     return dot(c.rgb, vec3(0.299, 0.587, 0.114));
@@ -82,7 +82,7 @@ void main(void) {
 `;
 
 // Packs one image's normal and AO maps into surface form. Images are
-// uploaded with their colour multiplied by alpha, which is undone first.
+// uploaded with their color multiplied by alpha, which is undone first.
 // Transparent normal map pixels count as flat and transparent AO as open.
 //
 //   uPack  has a normal map, has an AO map, green points up
@@ -186,7 +186,7 @@ ${autoNormal((dx, dy) => `colorAt(tileId, tileCoord + vec2(${dx}, ${dy}))`)}
 
 void main(void) {
     tileId = int(vTextureId);
-    // MZ's auto shadows: they darken the colour, not the surface.
+    // MZ's auto shadows: they darken the color, not the surface.
     if (tileId < 0) discard;
     tileCoord = clamp(vTextureCoord, vFrame.xy, vFrame.zw);
     vec4 color = colorAt(tileId, tileCoord);

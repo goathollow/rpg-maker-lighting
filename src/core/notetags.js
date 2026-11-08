@@ -18,7 +18,7 @@ export function findTags(text, name) {
 }
 
 const NUMBER = String.raw`-?(?:\d+\.?\d*|\.\d+)`;
-// key: value, where value is a hex colour, one to three numbers (so that
+// key: value, where value is a hex color, one to three numbers (so that
 // "color: 255, 128, 0" stays together), or a single word.
 const KEY_VALUE = new RegExp(
     String.raw`([a-z]+)\s*[:=]\s*(#[0-9a-f]+|${NUMBER}(?:\s*,\s*${NUMBER}){0,2}|[a-z_]\w*)`,

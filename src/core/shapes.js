@@ -9,7 +9,7 @@
 
 export const SHAPES = Object.freeze(["point", "cone", "beam"]);
 
-// Brightness at distance `d` from the centre, as a fraction of the radius.
+// Brightness at distance `d` from the center, as a fraction of the radius.
 // Smooth, and exactly zero from the radius outwards.
 export function lightFalloff(d) {
     const f = Math.max(1 - d * d, 0);
@@ -58,7 +58,7 @@ export function shapeFalloff(light, x, y) {
 }
 
 // The rectangle in light space that the shape's quad covers, as
-// [centreX, centreY, halfWidth, halfHeight]. Everything the shape lights is
+// [centerX, centerY, halfWidth, halfHeight]. Everything the shape lights is
 // inside it; a narrow cone or a beam covers far fewer pixels than its circle.
 export function lightBox(light, out = [0, 0, 0, 0]) {
     const r = light.radius;

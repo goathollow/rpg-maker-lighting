@@ -24,7 +24,7 @@ const resolve = (text, warn) => resolveLight(text, presets, warn, flickers);
 const round = (v) => Math.round(v * 1e9) / 1e9;
 
 describe("lightFalloff", () => {
-    test("is full at the centre and zero from the radius out", () => {
+    test("is full at the center and zero from the radius out", () => {
         assert.equal(lightFalloff(0), 1);
         assert.equal(lightFalloff(1), 0);
         assert.equal(lightFalloff(1.5), 0);
@@ -54,7 +54,7 @@ describe("lightOverAmbient", () => {
         assert.deepEqual(lightOverAmbient(light([1, 1, 1], 1.5), [1, 1, 1]), [0.5, 0.5, 0.5]);
     });
 
-    test("works per channel, so a colour shows where the ambient lacks it", () => {
+    test("works per channel, so a color shows where the ambient lacks it", () => {
         const torch = parseColor("#ff9d4d");
         const over = lightOverAmbient(light(torch), [0.5, 0.5, 0.5]);
         assert.ok(over[0] > over[1] && over[1] > 0 && over[2] === 0, over.join());

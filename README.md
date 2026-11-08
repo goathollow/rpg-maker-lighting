@@ -7,7 +7,7 @@ plugin commands; no scripting needed.
 
 | | |
 |---|---|
-| ![A chapel at dusk with coloured sunbeams through stained glass](docs/images/chapel-sunbeams.jpg) | ![A study lit by two fireplaces](docs/images/study-firelight.jpg) |
+| ![A chapel at dusk with colored sunbeams through stained glass](docs/images/chapel-sunbeams.jpg) | ![A study lit by two fireplaces](docs/images/study-firelight.jpg) |
 | ![Woods at night, the player holding a flashlight](docs/images/woods-flashlight.jpg) | ![A village by day, a bright stone glowing on a statue](docs/images/village-sunstone.jpg) |
 
 **[Download GH_Lighting.js](https://github.com/goathollow/rpg-maker-lighting/releases/latest/download/GH_Lighting.js)**
@@ -20,7 +20,7 @@ plugin commands; no scripting needed.
   command and kept in saves. Interiors and caves keep their own light with
   `<ambient>`.
 - **Lights** on events and the player: torches, lanterns, candles,
-  fireplaces, crystals, magic, in any colour. Lights fade out by day and
+  fireplaces, crystals, magic, in any color. Lights fade out by day and
   come back at dusk on their own.
 - **Flashlights and sunbeams.** Cones that turn with the character, and
   beams of light through windows.
@@ -68,7 +68,7 @@ Play-test, and the torch lights up the area around it.
 | Note | Effect |
 |---|---|
 | `<ambient: Night>` | The map's own light level: Day, Evening, Night, Dungeon, Cave, Darkness |
-| `<ambient: #303860>` | ...or any colour (also `48,56,96`) |
+| `<ambient: #303860>` | ...or any color (also `48,56,96`) |
 | `<ambient: off>` | Always fully lit, whatever the global light |
 | `<shadows: off>` | No shadows on this map |
 
@@ -85,7 +85,7 @@ page conditions can switch lights on and off)
 | `<light: color: #80ff80 radius: 100>` | No preset, settings given |
 | `<light: Flashlight spread: 90>` | A wider cone, pointing the way the event faces |
 | `<light: Sunbeam direction: 45 width: 32 radius: 300>` | A beam at 45 degrees |
-| `<light: Lamp flicker: Faulty>` | A lamp on the blink |
+| `<light: Lamp flicker: Faulty>` | A lamp on the fritz |
 | `<light: off>` | No light (on this page) |
 | `<shadow: off>` | This event casts no shadow |
 
@@ -126,7 +126,7 @@ our normal mapping tool on Steam. Maps from any other tool work too.
   deploying**. The play-test saves the list of maps to
   `data/GH_LightingMaps.json`, which browsers and phones need, since they
   can't look inside folders.
-- When deploying, leave **Exclude unused files** unticked, or the maps are
+- When deploying, leave **Exclude unused files** unchecked, or the maps are
   left out: nothing in the database names them.
 - Encrypted images are fine.
 
@@ -160,7 +160,7 @@ our normal mapping tool on Steam. Maps from any other tool work too.
 ## Troubleshooting
 
 Press **F8** during a play-test to open the console. Typos such as an
-unknown preset name or an unreadable colour are reported there, with the
+unknown preset name or an unreadable color are reported there, with the
 map and event they came from. The plugin's help has more.
 
 Found a bug? [Open an issue](https://github.com/goathollow/rpg-maker-lighting/issues)
@@ -171,8 +171,8 @@ with your MZ version, the plugin version and anything the console shows.
 See [CONTRIBUTING.md](CONTRIBUTING.md) to build and test the plugin, and
 [docs/how-it-works.md](docs/how-it-works.md) for how it works inside.
 
-## Licence
+## License
 
 [MIT](LICENSE): free to use in commercial and non-commercial games, and to
-change and share, as long as the licence notice in the plugin file stays
+change and share, as long as the license notice in the plugin file stays
 with it. Credit to Goat Hollow Games is appreciated, not required.

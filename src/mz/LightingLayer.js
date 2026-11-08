@@ -54,7 +54,7 @@ function casterCapacity(renderer) {
 
 // Builds a light buffer each frame and applies it to everything below:
 //
-//   1. fill the buffer with the ambient colour
+//   1. fill the buffer with the ambient color
 //   2. add each light on top (additive blend, one quad per light, fitted to
 //      its shape), darkened where walls or characters block it
 //   3. darken the map where the light is below 1, then brighten it where

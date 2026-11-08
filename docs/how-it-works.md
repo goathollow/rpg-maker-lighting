@@ -10,7 +10,7 @@ and the plugin's help in the Plugin Manager. To build and test it, see
 `LightingLayer` is the last child of the spriteset's base sprite. Each
 frame, in `refresh()` (after the spriteset's update, outside PIXI's render
 pass), it fills a light buffer
-with the ambient colour and adds one quad per on-screen light. The buffer is
+with the ambient color and adds one quad per on-screen light. The buffer is
 48 px larger than the screen on each side, for screen shake, and runs at
 "Light Quality" resolution.
 
@@ -46,7 +46,7 @@ the whole screen by 0.4%. With both passes skipped the layer is hidden and
 costs nothing.
 
 Each light adds only its excess over the ambient, per channel:
-`max(0, colour × intensity − ambient)` (`lightOverAmbient()`). So a light
+`max(0, color × intensity − ambient)` (`lightOverAmbient()`). So a light
 fades out as the ambient rises to its brightness: an intensity-1 torch is
 gone in full daylight and back at dusk, with no switches. Lights that add
 nothing are skipped, which keeps daytime maps free.
@@ -140,7 +140,7 @@ for them, so nothing pops in.
 normal y on screen, AO), undoing the image's premultiplied alpha and
 flipping green for Normal Map Green "up". Tilesets' maps go into
 2048-pixel textures laid out exactly like MZ's tilemap textures, so the tile
-shader finds a tile's maps where it finds its colours.
+shader finds a tile's maps where it finds its colors.
 
 **The frame**, when anything on screen has maps (otherwise the plain path
 above, unchanged):

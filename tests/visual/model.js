@@ -11,11 +11,11 @@ import { expect } from "./fixtures.js";
 //   1. the light buffer, one value per texel at Light Quality resolution:
 //      ambient + the sum over lights of excess * flicker * shape falloff *
 //      the fraction of the light the texel sees past shadow casters,
-//      rounded to the buffer's 8 bits. A light's excess is max(0, colour *
+//      rounded to the buffer's 8 bits. A light's excess is max(0, color *
 //      intensity - ambient).
 //   2. each screen pixel reads the buffer between its four nearest texels
 //      (bilinear filtering)
-//   3. the pixel is its unlit colour times min(Max Brightness, that light)
+//   3. the pixel is its unlit color times min(Max Brightness, that light)
 //
 // Sampling the buffer like this, rather than the shapes directly, keeps the
 // model exact at sharp features such as a cone's tip or a beam's edge.
@@ -113,7 +113,7 @@ export function shadowModel({ casterTiles, tile, display, casters, maxCasters })
 //      falloff * surfaceShading(the pixel's normal), rounded to 8 bits
 //   4. light = ambient + shading * red / green * AO (eased by AO Strength),
 //      reading red and green between the four nearest texels
-//   5. the pixel is its unlit colour times min(Max Brightness, that light)
+//   5. the pixel is its unlit color times min(Max Brightness, that light)
 export function expectMatchesSurfaceModel(lit, unlit, state, surface, tolerance = 3) {
     const { ambient, cap, time, resolution, margin, lights } = state;
     const scale = lightBufferScale(cap);

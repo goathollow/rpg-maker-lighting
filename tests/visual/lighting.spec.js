@@ -49,9 +49,9 @@ async function unlitPixels(page) {
 test.describe("rendering matches the lighting model", () => {
     // Max Brightness is the plugin's default (1.25) unless the scenario sets it.
     const scenarios = [
-        { name: "grey ambient with the lab's lights", ambient: "128,128,128", player: "off" },
+        { name: "gray ambient with the lab's lights", ambient: "128,128,128", player: "off" },
         { name: "darkness with a white player light", ambient: "0,0,0", player: "radius: 120" },
-        { name: "coloured ambient and a coloured light", ambient: "#402010", player: "color: #00ff80 radius: 160" },
+        { name: "colored ambient and a colored light", ambient: "#402010", player: "color: #00ff80 radius: 160" },
         { name: "a light far brighter than the cap", ambient: "#101010", player: "Lamp intensity: 2.5" },
         { name: "lights no brighter than a fully lit map fade out", player: "Lamp" },
         { name: "a light brighter than a fully lit map still shows", player: "Lamp intensity: 1.5" },
@@ -83,7 +83,7 @@ test.describe("rendering matches the lighting model", () => {
             player: "Lamp intensity: 2.5",
         },
         {
-            name: "Max Brightness 1: lights only restore colours",
+            name: "Max Brightness 1: lights only restore colors",
             query: { "p.maxBrightness": 1 },
             ambient: "128,128,128",
             player: "Lamp intensity: 2.5",

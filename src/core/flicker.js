@@ -9,7 +9,7 @@ import { readNumber } from "./params.js";
 //   fast  Short-lived changes on top: the pops and crackle of new fuel
 //         catching. Sharpness turns it from a soft shimmer into hard snaps.
 //
-// The result is a brightness multiplier centred on 1, so a light's average
+// The result is a brightness multiplier centered on 1, so a light's average
 // brightness stays where the developer set it. It depends only on time and
 // seed: frame-rate independent, identical on every machine and cheap enough
 // to evaluate per light per frame.

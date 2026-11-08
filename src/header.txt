@@ -1,6 +1,6 @@
 /*:
  * @target MZ
- * @plugindesc v{{VERSION}} Dynamic lighting: day and night, coloured lights, cones, beams, flicker, shadows and normal maps.
+ * @plugindesc v{{VERSION}} Dynamic lighting: day and night, colored lights, cones, beams, flicker, shadows and normal maps.
  * @author Goat Hollow Games
  * @url https://github.com/goathollow/rpg-maker-lighting
  *
@@ -42,8 +42,8 @@
  *
  *   <ambient: Cave>       a preset: Day, Evening, Night, Dungeon, Cave,
  *                         Darkness, or any you add in the parameters
- *   <ambient: #303860>    a colour, as hex
- *   <ambient: 48,56,96>   a colour, as red,green,blue (0-255 each)
+ *   <ambient: #303860>    a color, as hex
+ *   <ambient: 48,56,96>   a color, as red,green,blue (0-255 each)
  *   <ambient: off>        always fully lit, whatever the global light
  *
  * ----------------------------------------------------------------------------
@@ -55,14 +55,14 @@
  * disappear in full daylight and come back at dusk on their own, with no
  * switches needed.
  *
- * A light's brightness at its centre is set by its intensity:
+ * A light's brightness at its center is set by its intensity:
  *
- *   1      the map's own colours: shows in the dark, gone in full daylight
+ *   1      the map's own colors: shows in the dark, gone in full daylight
  *   1.25   a little brighter than drawn: a glow, faintly visible by day
  *   2      twice as bright (if Max Brightness allows)
  *
  * "Max Brightness" caps how far any light may brighten the map beyond the
- * colours it was drawn with: 1 = not at all, 1.25 by default, 2 at most.
+ * colors it was drawn with: 1 = not at all, 1.25 by default, 2 at most.
  *
  * ----------------------------------------------------------------------------
  * Lights (event note or page comment)
@@ -76,14 +76,14 @@
  * Settings you can change:
  *   color      #rrggbb or red,green,blue
  *   radius     how far the light reaches, in pixels (a tile is 48)
- *   intensity  brightness at the centre: 1 = the map's own colours,
+ *   intensity  brightness at the center: 1 = the map's own colors,
  *              above 1 = brighter (see "Lights by day and by night")
  *   flicker    Fire, Candle, Pulse, Faulty or off (see "Flicker")
  *   shape      point, cone or beam (see "Cones and beams")
  *   shadows    on or off (see "Shadows")
  *   softness   how soft its shadows' edges are, 0-48
  *   height     how high it hangs, in pixels
- *   x, y       move the light from the event's centre, in pixels
+ *   x, y       move the light from the event's center, in pixels
  *
  * In the event's Note box, the light is on whenever the event is on the map.
  *
@@ -121,7 +121,7 @@
  * Torches, candles, fireplaces and lanterns flicker, and Magic pulses. Any
  * light can be given a flicker preset, or have its flicker taken away:
  *
- *   <light: Lamp flicker: Faulty>     a lamp on the blink
+ *   <light: Lamp flicker: Faulty>     a lamp on the fritz
  *   <light: Torch flicker: off>       a steady torch
  *
  * Flicker has two layers. Set them in the Flicker Presets parameter, or
@@ -210,11 +210,11 @@
  * what the plugin expects. If light seems to come from below, set Normal Map
  * Green to "down".
  *
- * Ambient occlusion maps are greyscale: white is open, black is a deep
+ * Ambient occlusion maps are grayscale: white is open, black is a deep
  * crease. Light from lights sinks less far into creases. Neither map changes
  * the ambient light (day and night, or a map's own): it lights every image
  * evenly, as without maps, so by day images look as drawn. Keep open areas
- * white: a map that is grey all over dims whatever a torch lights (or lower
+ * white: a map that is gray all over dims whatever a torch lights (or lower
  * AO Strength).
  *
  * Auto Normal Maps (parameter) gives images without a normal map a rough
@@ -223,7 +223,7 @@
  * After adding or removing these images, play-test once before deploying:
  * the play-test saves the list of them to data/GH_LightingMaps.json, which
  * browsers and phones need. When deploying, leave "Exclude unused files"
- * unticked, or they are left out.
+ * unchecked, or they are left out.
  *
  * ----------------------------------------------------------------------------
  * Plugin commands
@@ -245,7 +245,7 @@
  * ----------------------------------------------------------------------------
  *
  * Press F8 during a play-test to open the console. Typos such as an unknown
- * preset name or an unreadable colour are reported there, with the map and
+ * preset name or an unreadable color are reported there, with the map and
  * event they came from.
  *
  * The map isn't any darker: maps without an <ambient> tag follow the Global
@@ -264,8 +264,8 @@
  * Terms of use
  * ----------------------------------------------------------------------------
  *
- * MIT licence: free to use in commercial and non-commercial games, and to
- * change and share, as long as the licence notice at the top of this file
+ * MIT license: free to use in commercial and non-commercial games, and to
+ * change and share, as long as the license notice at the top of this file
  * stays with it. Credit to Goat Hollow Games is appreciated, not required.
  *
  * Updates, source and bug reports:
@@ -285,7 +285,7 @@
  *
  * @param maxBrightness
  * @text Max Brightness
- * @desc How far lights may brighten the map beyond its drawn colours. 1 = not at all, 2 = up to double.
+ * @desc How far lights may brighten the map beyond its drawn colors. 1 = not at all, 2 = up to double.
  * @type number
  * @decimals 2
  * @min 1
@@ -294,7 +294,7 @@
  *
  * @param globalLight
  * @text Global Light
- * @desc The game's light level at the start, for maps without an <ambient> tag. A preset or colour. Blank = fully lit.
+ * @desc The game's light level at the start, for maps without an <ambient> tag. A preset or color. Blank = fully lit.
  * @type combo
 {{AMBIENT_PRESET_OPTIONS}}
  * @default
@@ -416,7 +416,7 @@
  *
  * @param ambientPresets
  * @text Ambient Presets
- * @desc Named colours for <ambient: Name> tags and commands.
+ * @desc Named colors for <ambient: Name> tags and commands.
  * @type struct<AmbientPreset>[]
  * @default {{AMBIENT_PRESETS}}
  *
@@ -426,7 +426,7 @@
  *
  * @arg color
  * @text Preset or Color
- * @desc An ambient preset name, or a colour: #303860 or 48,56,96. Day or off = fully lit.
+ * @desc An ambient preset name, or a color: #303860 or 48,56,96. Day or off = fully lit.
  * @type combo
 {{AMBIENT_PRESET_OPTIONS}}
  * @default Night
@@ -450,7 +450,7 @@
  *
  * @arg color
  * @text Preset or Color
- * @desc An ambient preset name, or a colour: #303860 or 48,56,96.
+ * @desc An ambient preset name, or a color: #303860 or 48,56,96.
  * @type combo
 {{AMBIENT_PRESET_OPTIONS}}
  * @default Night
@@ -540,7 +540,7 @@
  *
  * @param intensity
  * @text Intensity
- * @desc Brightness at the centre. 1 = the map's own colours; above 1 is brighter and still shows by day.
+ * @desc Brightness at the center. 1 = the map's own colors; above 1 is brighter and still shows by day.
  * @type number
  * @decimals 2
  * @min 0

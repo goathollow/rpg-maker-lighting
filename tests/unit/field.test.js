@@ -98,7 +98,7 @@ describe("caster grid", () => {
 });
 
 describe("distance field", () => {
-    test("holds the exact distance at every texel centre, within 8-bit rounding", () => {
+    test("holds the exact distance at every texel center, within 8-bit rounding", () => {
         for (const [seed, options] of [[1, {}], [2, { loopX: true }], [3, { loopX: true, loopY: true }]]) {
             const map = randomMap(9, 7, seed, options);
             const field = distanceField(map, { tile: TILE, density: 4 });
@@ -120,7 +120,7 @@ describe("distance field", () => {
         const field = distanceField(map, { tile: TILE });
         const edge = sampleField(field, 3 * TILE, 1.5 * TILE);
         assert.ok(Math.abs(edge) < 0.5, `edge ${edge}`);
-        // The centre is between texels 3 px either way, which are 21 px in.
+        // The center is between texels 3 px either way, which are 21 px in.
         assert.ok(Math.abs(sampleField(field, 3.5 * TILE, 1.5 * TILE) + 21) < 0.5);
         assert.ok(Math.abs(sampleField(field, 3.5 * TILE, 0.5 * TILE) - TILE / 2) < 1);
         assert.equal(sampleField(field, 7.5 * TILE, 1.5 * TILE), MAX);

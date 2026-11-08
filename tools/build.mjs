@@ -16,15 +16,15 @@ const structListDefault = (list) => JSON.stringify(list.map((item) => JSON.strin
 const comboOptions = (list) => list.map((item) => ` * @option ${item.name}`).join("\n");
 
 const pkg = JSON.parse(readFileSync("package.json", "utf8"));
-// The MIT licence asks for its notice in every copy. It follows the Plugin
+// The MIT license asks for its notice in every copy. It follows the Plugin
 // Manager blocks, so they stay first in the file, where the editor reads them.
-const licence = [
+const license = [
     `${PLUGIN_NAME}.js v${pkg.version}`,
     pkg.homepage.replace(/#.*$/, ""),
     "",
     ...readFileSync("LICENSE", "utf8").trim().split(/\r?\n/),
 ];
-const notice = `/*!\n${licence.map((line) => ` * ${line}`.trimEnd()).join("\n")}\n */\n`;
+const notice = `/*!\n${license.map((line) => ` * ${line}`.trimEnd()).join("\n")}\n */\n`;
 const header = readFileSync("src/header.txt", "utf8")
     .replaceAll("{{VERSION}}", pkg.version)
     .replaceAll("{{NAME}}", PLUGIN_NAME)

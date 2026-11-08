@@ -115,10 +115,10 @@ there (walk into a door or the gate to go through; press OK at the well):
 - the top-left door: **The Study** (5), dim, with two fireplaces, braziers
   and candelabras
 - the bottom-left door: **Chapel at Dusk** (8), candles, a glowing relic and
-  coloured sunbeams through the stained glass
+  colored sunbeams through the stained glass
 - the well in the square: **Old Mine** (6), `<ambient: Cave>`. Take a torch
   from the wall by the way in; crystals glow in the dark, and an old
-  lantern is on the blink
+  lantern is on the fritz
 - the gateway at the bottom of the village: **Night Woods** (7),
   `<ambient: Night>`. A chest by the path holds a flashlight; there's a
   campfire, lit cabin windows, glowing mushrooms and fireflies
@@ -153,7 +153,7 @@ similar to try parameters).
 ## Layout
 
 ```
-src/core/     pure logic (colours, notetags, lights, shapes, ambient, flicker,
+src/core/     pure logic (colors, notetags, lights, shapes, ambient, flicker,
               distance field, shadows, outlines, surface maps), unit-tested
 src/mz/       engine integration (game state, commands, shaders, shadow map,
               outline atlas, surface maps and buffer, lighting layer)
@@ -188,7 +188,7 @@ docs/         how it works, and the README's screenshots
 - **The user guide is the plugin's help** (`src/header.txt`). Every
   parameter, command and argument needs a name and a description; a unit
   test checks.
-- **Nothing third-party in the repository** except what its licence allows:
+- **Nothing third-party in the repository** except what its license allows:
   RTP assets and engine files are copied from the local MZ install.
 
 ## Releasing

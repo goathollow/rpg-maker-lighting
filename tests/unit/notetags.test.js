@@ -43,7 +43,7 @@ describe("parseTagArgs", () => {
         assert.deepEqual(parseTagArgs("Torch radius=200 color=#ff0000"), expected);
     });
 
-    test("keeps an r,g,b colour together", () => {
+    test("keeps an r,g,b color together", () => {
         assert.deepEqual(parseTagArgs("torch color: 255, 128, 0 radius: 100").values, {
             color: "255, 128, 0",
             radius: "100",

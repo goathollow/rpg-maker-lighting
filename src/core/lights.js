@@ -4,7 +4,7 @@ import { parseTagArgs } from "./notetags.js";
 import { readString } from "./params.js";
 import { SHAPES } from "./shapes.js";
 
-// A resolved light, as the renderer uses it: colour in 0..1, sizes, offsets
+// A resolved light, as the renderer uses it: color in 0..1, sizes, offsets
 // and heights in pixels, angles in degrees clockwise from up.
 export const DEFAULT_LIGHT = Object.freeze({
     color: Object.freeze([1, 1, 1]),
@@ -66,7 +66,7 @@ const ALIASES = {
 
 const DIRECTION_WORDS = { facing: "facing", up: 0, right: 90, down: 180, left: 270 };
 
-// What a light adds over the ambient around it, per channel: its colour
+// What a light adds over the ambient around it, per channel: its color
 // times its intensity, less the ambient, never below 0. So a light fades out
 // as the ambient rises to its brightness (torches vanish by day) and shows
 // more the brighter it is. Writes into and returns `out`.
@@ -99,7 +99,7 @@ function readDirection(text) {
     return Number.isFinite(n) ? ((n % 360) + 360) % 360 : null;
 }
 
-// Copies `base` with each recognised value from `values` applied. Empty
+// Copies `base` with each recognized value from `values` applied. Empty
 // values keep the base; unreadable ones are reported and skipped. A named
 // flicker is applied before any single flicker setting, whatever the order
 // they were written in, so "flicker: Fire, fast: 0.3" tweaks Fire.

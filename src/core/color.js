@@ -1,4 +1,4 @@
-// Colours as typed by developers: "#rgb", "#rrggbb" or "red,green,blue" with
+// Colors as typed by developers: "#rgb", "#rrggbb" or "red,green,blue" with
 // each part 0-255. Returns [r, g, b] in 0..1, or null if unreadable.
 export function parseColor(text) {
     if (typeof text !== "string") return null;

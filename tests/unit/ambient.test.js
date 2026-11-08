@@ -39,7 +39,7 @@ describe("ambient presets and resolution", () => {
         assert.deepEqual(presets.get("darkness"), [0, 0, 0]);
     });
 
-    test("resolves preset names, ignoring case, and colours", () => {
+    test("resolves preset names, ignoring case, and colors", () => {
         assert.deepEqual(resolveAmbient("night", presets), presets.get("night"));
         assert.deepEqual(resolveAmbient("#808080", presets), parseColor("#808080"));
         assert.deepEqual(resolveAmbient("64, 64, 64", presets), parseColor("64,64,64"));
