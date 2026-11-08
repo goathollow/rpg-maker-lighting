@@ -45,19 +45,19 @@ describe("finding surface maps by name", () => {
 
     test("groups a folder's maps by the image they belong to", () => {
         const maps = surfaceMapsIn([
-            "AcademyStudents.png",
-            "AcademyStudents_normal.png",
-            "AcademyStudents_ao.png",
-            "AcademyStudents_specular.png",
+            "Showcase_Party.png",
+            "Showcase_Party_normal.png",
+            "Showcase_Party_ao.png",
+            "Showcase_Party_specular.png",
             "Actor1.png",
             "actor1_N.png_",
             "Readme.txt",
         ]);
-        assert.deepEqual([...maps.keys()].sort(), ["academystudents", "actor1"]);
-        assert.deepEqual(maps.get("academystudents"), {
-            normal: "AcademyStudents_normal",
-            ao: "AcademyStudents_ao",
-            specular: "AcademyStudents_specular",
+        assert.deepEqual([...maps.keys()].sort(), ["actor1", "showcase_party"]);
+        assert.deepEqual(maps.get("showcase_party"), {
+            normal: "Showcase_Party_normal",
+            ao: "Showcase_Party_ao",
+            specular: "Showcase_Party_specular",
         });
         assert.deepEqual(maps.get("actor1"), { normal: "actor1_N" });
     });

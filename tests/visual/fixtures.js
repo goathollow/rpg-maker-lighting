@@ -6,9 +6,9 @@ export { expect, PLUGIN_NAME };
 
 // MZ's default starting party: Reid, Michelle, Kasey and Eliot (Actor1).
 export const RTP_PARTY = "1,4,6,7";
-// The test project's starting party: the eight AcademyStudents, actors 9-16,
-// whose sheet has hand-made normal and AO maps.
-export const ACADEMY_PARTY = "9,10,11,12,13,14,15,16";
+// The test project's starting party, actors 9-16: Actor1's eight on
+// Showcase_Party, a copy of the sheet with normal and AO maps made for it.
+export const SHOWCASE_PARTY = "9,10,11,12,13,14,15,16";
 
 // The test run is below normal priority (playwright.config.js) and browsers
 // inherit that, except Chrome's GPU process, which raises itself above normal
@@ -42,7 +42,7 @@ export const test = base.extend({
     // two keep filling as the test runs).
     //
     // Tests start with the RTP party the golden images were drawn with
-    // (RTP_PARTY), not the project's own, the AcademyStudents set: that has
+    // (RTP_PARTY), not the project's own (SHOWCASE_PARTY): that has
     // normal maps, which would put every map on the surface path. Pass
     // `party` to start with others. Max Brightness is the plugin's default
     // (1.25), not the project's 2, which is there for the showcase maps.

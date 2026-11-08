@@ -60,33 +60,7 @@ function upgradeSystemJson() {
     console.log(`Added missing System.json fields: ${missing.join(", ")}`);
 }
 
-// The showcase party's sheet, AcademyStudents, which has hand-made normal and
-// AO maps. It isn't part of the repository: setup copies it from normals/
-// when that folder has it, and otherwise puts RTP's Actor1 sheet in its
-// place, so the showcase still runs, its party without normal maps.
-const PARTY_SHEET = "AcademyStudents";
-function installPartySheet() {
-    const dir = join(target, "img", "characters");
-    const sheet = join(dir, `${PARTY_SHEET}.png`);
-    const standIn = join(dir, "Actor1.png");
-    const source = "normals";
-    if (existsSync(join(source, `${PARTY_SHEET}.png`))) {
-        const isStandIn = existsSync(sheet) && readFileSync(sheet).equals(readFileSync(standIn));
-        for (const name of readdirSync(source)) {
-            if (!name.startsWith(`${PARTY_SHEET}`) || !name.endsWith(".png")) continue;
-            const dst = join(dir, name);
-            if (existsSync(dst) && !(isStandIn && dst === sheet)) continue;
-            copyFileSync(join(source, name), dst);
-            copied++;
-        }
-    } else if (!existsSync(sheet)) {
-        copyFileSync(standIn, sheet);
-        console.log(`normals/${PARTY_SHEET}.png not found: the showcase party uses RTP's Actor1 sheet instead.`);
-    }
-}
-
 copyTree(template, target);
 upgradeSystemJson();
-installPartySheet();
 makeTestMaps();
 console.log(`Copied ${copied} new files from ${template}` + (refreshEngine ? `, refreshed ${refreshed} engine files.` : "."));

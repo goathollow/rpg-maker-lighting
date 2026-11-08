@@ -1,4 +1,3 @@
-import { existsSync } from "node:fs";
 import { decodeNormal, encodeNormal, strengthen } from "../../src/core/surfaces.js";
 import {
     parallaxNormal,
@@ -9,7 +8,8 @@ import {
     sheetBNormal,
     TEST_TILESET_NAME,
 } from "../../tools/make-test-maps.mjs";
-import { ACADEMY_PARTY, command, expect, lightingState, pixels, snapHash, step, stepUntil, test } from "./fixtures.js";
+import { SHOWCASE_SHEET } from "../../tools/make-test-maps.mjs";
+import { SHOWCASE_PARTY, command, expect, lightingState, pixels, snapHash, step, stepUntil, test } from "./fixtures.js";
 import { expectMatchesSurfaceModel } from "./model.js";
 
 // The lab (see lighting.spec.js) switched to the test tileset, whose A5 and B
@@ -514,27 +514,23 @@ test.describe("finding and loading maps", () => {
 });
 
 test.describe("the project's party", () => {
-    // The AcademyStudents sheet has hand-made normal and AO maps. The leader
-    // and each follower on screen should draw them; the other four wait in
-    // reserve, as MZ shows only the battle members. The sheet isn't part of
-    // the repository (CONTRIBUTING.md), so without it there is nothing to test.
-    const sheetMaps = new URL("../../testproject/img/characters/AcademyStudents_normal.png", import.meta.url);
-    test.skip(!existsSync(sheetMaps), "the AcademyStudents sheet isn't installed");
-
+    // Showcase_Party has normal and AO maps. The leader and each follower on
+    // screen should draw them; the other four wait in reserve, as MZ shows
+    // only the battle members.
     test("the leader and followers draw their maps", async ({ page, openMap }) => {
-        const { warnings, pageErrors } = await openMap({ ...LAB, party: ACADEMY_PARTY, "p.globalLight": "Night" });
+        const { warnings, pageErrors } = await openMap({ ...LAB, party: SHOWCASE_PARTY, "p.globalLight": "Night" });
         const party = await page.evaluate(() => $gameParty.members().map((a) => [a.characterName(), a.characterIndex()]));
-        expect(party).toEqual([0, 1, 2, 3, 4, 5, 6, 7].map((i) => ["AcademyStudents", i]));
+        expect(party).toEqual([0, 1, 2, 3, 4, 5, 6, 7].map((i) => [SHOWCASE_SHEET, i]));
         // Followers start on the player's tile; stand them beside it.
         await page.evaluate(() => {
             $gamePlayer.followers().data().forEach((f, i) => f.locate([7, 8, 10][i], 8));
         });
-        const drawn = () => {
+        const drawn = (name) => {
             const s = SceneManager._scene._spriteset._lightingLayer._surfaces;
-            const sheet = ImageManager.loadCharacter("AcademyStudents").baseTexture;
+            const sheet = ImageManager.loadCharacter(name).baseTexture;
             return s.active ? s._items.filter((item) => item.color === sheet && item.flags === 3).length : 0;
         };
-        await stepUntil(page, `(${drawn})() === 4`);
+        await stepUntil(page, `(${drawn})(${JSON.stringify(SHOWCASE_SHEET)}) === 4`);
         expect(warnings.filter((w) => w.includes("GH_Lighting"))).toEqual([]);
         expect(pageErrors).toEqual([]);
     });

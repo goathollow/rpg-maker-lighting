@@ -3,8 +3,7 @@ dist/
 test-results/
 playwright-report/
 
-# The showcase party's sheet and its maps (see CONTRIBUTING.md). Not part of
-# the repository; setup copies them into the test project when they are here.
+# Local art that isn't ours to share.
 normals/
 
 # Test project: RTP assets and engine files are copied from the local MZ

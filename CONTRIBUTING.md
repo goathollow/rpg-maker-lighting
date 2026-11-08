@@ -136,14 +136,18 @@ tile), `Lab_Ocean` (a parallax), and the tileset "[Test] Inside, normal maps"
 that uses the two sheets. No map uses them, so existing screenshots don't
 change; tests switch to them.
 
-The showcase party, actors 9-16, wear the `AcademyStudents` sheet, which has
-hand-made normal and AO maps. That sheet is not part of the repository. If
-you have it, put `AcademyStudents.png` and its maps in `normals/` (ignored
-by git) before `npm run setup`, which copies them into the test project.
-Without it, setup puts RTP's Actor1 sheet in its place, so the showcase
-still runs, its party without normal maps, and the one test of the party's
-maps is skipped. Tests start with MZ's default party (actors 1, 4, 6 and 7)
-and Max Brightness 1.25, so no screenshot depends on the sheet.
+The showcase party, actors 9-16, are Actor1's eight on `Showcase_Party`, a
+copy of that sheet whose normal and AO maps are worked out from its sprites
+(`spriteMaps()`): rounded off at their outlines, with their detail raised
+or sunk by lightness, as normal map tools do. Like the other test images,
+they are made from the RTP in your own MZ install and never committed. Tests
+start with MZ's default party (actors 1, 4, 6 and 7) and Max Brightness
+1.25, so no screenshot depends on them; one test checks the party draws its
+maps.
+
+RTP images, and maps made from them, can't go in the repository: MZ's
+license lets its assets be shared only in games, or, modified, for free
+with other MZ owners.
 
 Add more maps with `node tools/import-sample-map.mjs <sampleNumber> <mapId> <name>`,
 and screenshot any map without the editor using
