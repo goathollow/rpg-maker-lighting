@@ -1,6 +1,6 @@
 {
   "name": "gh-lighting",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "description": "Dynamic 2D lighting plugin for RPG Maker MZ: day and night, colored lights, cones, beams, flicker, soft shadows and normal maps",
   "license": "MIT",

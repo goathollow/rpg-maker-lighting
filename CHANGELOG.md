@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1
+
+- US spellings throughout the plugin's help and the documentation: color,
+  center, license, gray.
+- Light notetags accept only `color:`. The British spelling is now
+  reported in the console as an unknown setting, like any other typo.
+
 ## 0.9.0
 
 The first public release.
