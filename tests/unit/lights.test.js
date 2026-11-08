@@ -152,8 +152,8 @@ describe("resolveLight", () => {
         assert.equal(presets.get("torch").radius, 168);
     });
 
-    test("accepts British spelling and friendly synonyms", () => {
-        const light = resolveLight("colour: #00ff00 size: 50 brightness: 2", presets);
+    test("accepts friendly synonyms", () => {
+        const light = resolveLight("color: #00ff00 size: 50 brightness: 2", presets);
         assert.deepEqual(light.color, [0, 1, 0]);
         assert.equal(light.radius, 50);
         assert.equal(light.intensity, 2);

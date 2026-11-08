@@ -39,7 +39,6 @@ const LIMITS = {
 // Every word accepted for each light setting, in notetags and preset fields.
 const ALIASES = {
     color: "color",
-    colour: "color",
     radius: "radius",
     size: "radius",
     length: "radius",

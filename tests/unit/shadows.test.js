@@ -327,9 +327,9 @@ describe("<shadow> tags", () => {
 
     test("reports what it can't read", () => {
         const { messages, warn } = collect();
-        resolveShadow("big width: wide colour: red", warn);
+        resolveShadow("big width: wide hue: red", warn);
         assert.match(messages.join("\n"), /can't read shadow "big"/);
         assert.match(messages.join("\n"), /can't read shadow width "wide"/);
-        assert.match(messages.join("\n"), /unknown shadow setting "colour"/);
+        assert.match(messages.join("\n"), /unknown shadow setting "hue"/);
     });
 });
