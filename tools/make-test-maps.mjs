@@ -4,7 +4,7 @@
 // screenshots do not change; tests switch to these on purpose.
 //
 //   Lab_People.png       People1, with domed normals and rimmed AO per frame
-//   Lab_Inside_A5.png    Inside_A5, with bevelled tile edges (normal map)
+//   Lab_Inside_A5.png    Inside_A5, with beveled tile edges (normal map)
 //   Lab_Inside_B.png     Inside_B, with domed normals and AO per tile
 //   Lab_Ocean.png        the Ocean parallax, with domed normals
 //   tileset "[Test] Inside, normal maps"   Inside, with those two sheets
@@ -75,7 +75,7 @@ export function dome(x, y, cx, cy, r) {
     return [dx, dy, Math.sqrt(1 - d2)];
 }
 
-// A tile with its edges bevelled outward over `width` pixels.
+// A tile with its edges beveled outward over `width` pixels.
 export function bevel(x, y, size, width) {
     const u = x % size;
     const v = y % size;

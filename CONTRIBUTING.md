@@ -131,7 +131,7 @@ switches it on or off (common events 1 and 2, switches 1 and 2).
 Test images with normal and AO maps (`tools/make-test-maps.mjs`, run by
 `npm run setup` and every build, which also writes the project's
 `data/GH_LightingMaps.json`): `Lab_People` (People1, domes and AO per
-frame), `Lab_Inside_A5` (bevelled tiles), `Lab_Inside_B` (domes and AO per
+frame), `Lab_Inside_A5` (beveled tiles), `Lab_Inside_B` (domes and AO per
 tile), `Lab_Ocean` (a parallax), and the tileset "[Test] Inside, normal maps"
 that uses the two sheets. No map uses them, so existing screenshots don't
 change; tests switch to them.
