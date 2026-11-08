@@ -1,0 +1,35 @@
+{
+  "name": "gh-lighting",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Dynamic 2D lighting plugin for RPG Maker MZ: day and night, coloured lights, cones, beams, flicker, soft shadows and normal maps",
+  "license": "MIT",
+  "author": "Goat Hollow Games",
+  "homepage": "https://github.com/goathollow/rpg-maker-lighting#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goathollow/rpg-maker-lighting.git"
+  },
+  "bugs": {
+    "url": "https://github.com/goathollow/rpg-maker-lighting/issues"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "scripts": {
+    "setup": "node tools/setup-testproject.mjs",
+    "build": "node tools/build.mjs",
+    "dev": "node tools/build.mjs --watch",
+    "serve": "node tools/serve.mjs testproject 8123",
+    "test": "node --test \"tests/unit/**/*.test.js\"",
+    "test:visual": "npm run build && playwright test",
+    "test:visual:update": "npm run build && playwright test --update-snapshots",
+    "test:nwjs": "npm run build && node tools/nwjs-smoke.mjs && node tools/nwjs-smoke.mjs --surfaces",
+    "test:all": "npm test && npm run test:visual && node tools/nwjs-smoke.mjs && node tools/nwjs-smoke.mjs --surfaces"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2"
+  }
+}

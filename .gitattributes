@@ -1,0 +1,4 @@
+# LF everywhere, whatever core.autocrlf says: the build and the header tests
+# read src/header.txt line by line, and MZ's data files are compared as text.
+* text=auto eol=lf
+*.png binary

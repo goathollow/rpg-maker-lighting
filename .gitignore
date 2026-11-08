@@ -1,0 +1,25 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+
+# The showcase party's sheet and its maps (see CONTRIBUTING.md). Not part of
+# the repository; setup copies them into the test project when they are here.
+normals/
+
+# Test project: RTP assets and engine files are copied from the local MZ
+# install by `npm run setup` and must not be redistributed. Only our test
+# data, plugin list and harness are tracked.
+testproject/*
+!testproject/game.rmmzproject
+!testproject/package.json
+!testproject/data/
+!testproject/js/
+testproject/js/*
+!testproject/js/plugins.js
+!testproject/js/plugins/
+testproject/js/plugins/*
+!testproject/js/plugins/LightingTestHarness.js
+testproject/save/
+# Made by the build from the images installed (and by play-tests).
+testproject/data/GH_LightingMaps.json

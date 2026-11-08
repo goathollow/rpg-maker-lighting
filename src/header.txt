@@ -1,0 +1,697 @@
+/*:
+ * @target MZ
+ * @plugindesc v{{VERSION}} Dynamic lighting: day and night, coloured lights, cones, beams, flicker, shadows and normal maps.
+ * @author Goat Hollow Games
+ * @url https://github.com/goathollow/rpg-maker-lighting
+ *
+ * @help {{NAME}}.js v{{VERSION}}
+ *
+ * Darkens maps and lights them with torches, lamps, crystals and more.
+ * Everything is set up with notes and comments; no scripting needed.
+ *
+ * Keep the file named {{NAME}}.js: RPG Maker finds its parameters and
+ * plugin commands by that name.
+ *
+ * ----------------------------------------------------------------------------
+ * Quick start
+ * ----------------------------------------------------------------------------
+ *
+ * 1. Make the map dark. In the map's Note box (Map Properties), write:
+ *
+ *        <ambient: Night>
+ *
+ * 2. Give an event a light. In the event's Note box, write:
+ *
+ *        <light: Torch>
+ *
+ * Play-test, and the torch lights up the area around it.
+ *
+ * ----------------------------------------------------------------------------
+ * Global light and map ambient
+ * ----------------------------------------------------------------------------
+ *
+ * The global light is the light level of the whole game world: daylight,
+ * dusk, night. It starts at the "Global Light" parameter, changes with the
+ * Set Global Light command, and stays changed across maps and in saves.
+ *
+ * Every map without an <ambient> tag follows the global light, so one
+ * Set Global Light: Night darkens every outdoor map at once.
+ *
+ * Maps that should keep their own light, such as interiors and caves, get
+ * an <ambient> tag in their note and ignore the global light:
+ *
+ *   <ambient: Cave>       a preset: Day, Evening, Night, Dungeon, Cave,
+ *                         Darkness, or any you add in the parameters
+ *   <ambient: #303860>    a colour, as hex
+ *   <ambient: 48,56,96>   a colour, as red,green,blue (0-255 each)
+ *   <ambient: off>        always fully lit, whatever the global light
+ *
+ * ----------------------------------------------------------------------------
+ * Lights by day and by night
+ * ----------------------------------------------------------------------------
+ *
+ * A light only shows where it is brighter than the light around it. As the
+ * ambient rises to a light's brightness, the light fades out: torches
+ * disappear in full daylight and come back at dusk on their own, with no
+ * switches needed.
+ *
+ * A light's brightness at its centre is set by its intensity:
+ *
+ *   1      the map's own colours: shows in the dark, gone in full daylight
+ *   1.25   a little brighter than drawn: a glow, faintly visible by day
+ *   2      twice as bright (if Max Brightness allows)
+ *
+ * "Max Brightness" caps how far any light may brighten the map beyond the
+ * colours it was drawn with: 1 = not at all, 1.25 by default, 2 at most.
+ *
+ * ----------------------------------------------------------------------------
+ * Lights (event note or page comment)
+ * ----------------------------------------------------------------------------
+ *
+ *   <light: Torch>                    a preset
+ *   <light: Torch radius: 240>        a preset with changes
+ *   <light: color: #80ff80 radius: 100>   no preset, all settings given
+ *   <light>                           a plain white light
+ *
+ * Settings you can change:
+ *   color      #rrggbb or red,green,blue
+ *   radius     how far the light reaches, in pixels (a tile is 48)
+ *   intensity  brightness at the centre: 1 = the map's own colours,
+ *              above 1 = brighter (see "Lights by day and by night")
+ *   flicker    Fire, Candle, Pulse, Faulty or off (see "Flicker")
+ *   shape      point, cone or beam (see "Cones and beams")
+ *   shadows    on or off (see "Shadows")
+ *   softness   how soft its shadows' edges are, 0-48
+ *   height     how high it hangs, in pixels
+ *   x, y       move the light from the event's centre, in pixels
+ *
+ * In the event's Note box, the light is on whenever the event is on the map.
+ *
+ * In a Comment on an event page, the light belongs to that page only. Use
+ * this to switch lights with page conditions, for example:
+ *
+ *   Page 1                     Comment: <light: off>
+ *   Page 2 (Self Switch A)     Comment: <light: Torch>
+ *
+ * A comment on the active page always wins over the event's note.
+ *
+ * ----------------------------------------------------------------------------
+ * Cones and beams
+ * ----------------------------------------------------------------------------
+ *
+ *   <light: Flashlight>               a cone, pointing the way the event faces
+ *   <light: Flashlight spread: 90>    a wider cone
+ *   <light: Sunbeam>                  a beam, pointing down
+ *   <light: Sunbeam direction: 45 width: 32 radius: 300>
+ *
+ *   shape      point (the default), cone or beam
+ *   direction  facing: the way the event or player faces, turning smoothly
+ *              as they turn. Or up, down, left, right, or an angle in
+ *              degrees clockwise from up (90 = right, 180 = down)
+ *   spread     a cone's width in degrees, 1-360
+ *   width      a beam's width in pixels. A beam's radius is its length.
+ *
+ * Give the player a Flashlight (Set Player Light, or the Player Light
+ * parameter) and it points wherever they walk.
+ *
+ * ----------------------------------------------------------------------------
+ * Flicker
+ * ----------------------------------------------------------------------------
+ *
+ * Torches, candles, fireplaces and lanterns flicker, and Magic pulses. Any
+ * light can be given a flicker preset, or have its flicker taken away:
+ *
+ *   <light: Lamp flicker: Faulty>     a lamp on the blink
+ *   <light: Torch flicker: off>       a steady torch
+ *
+ * Flicker has two layers. Set them in the Flicker Presets parameter, or
+ * change them in a tag:
+ *
+ *   slow       how far the overall level rises and falls (0-1): the long,
+ *              slow breathing of a fire
+ *   slowSpeed  how many times a second the overall level changes
+ *   fast       how strong the quick pops and crackle are (0-1)
+ *   fastSpeed  how many pops a second
+ *   sharpness  0 = a soft shimmer, 1 = sudden snaps
+ *
+ *   <light: Torch fast: 0.3>          a Torch that crackles harder
+ *
+ * Every light flickers in its own way. To make lights flicker together,
+ * give them the same seed:  <light: Torch seed: 7>
+ *
+ * ----------------------------------------------------------------------------
+ * Shadows
+ * ----------------------------------------------------------------------------
+ *
+ * Lights cast shadows with no setup:
+ *
+ *   walls        the tops of walls (A4) and roofs (A3) block light. Their
+ *                edges facing a light catch it, a tile deep.
+ *   characters   the player, followers, and events with character images
+ *                cast shadows from their feet, away from each light, in
+ *                the shape of the frame each one is showing. Their shadows
+ *                fall on the ground and on the fronts of walls, never on
+ *                the tops of walls, roofs or other tiles that block light.
+ *
+ * More tiles can block light. List region IDs in the Shadow Regions
+ * parameter and paint them over crates, tables or trees, or list terrain
+ * tags (Database > Tilesets) in Shadow Terrain Tags.
+ *
+ * Shadow edges are soft, and softer further from what casts them. A light's
+ * softness is its size in pixels: 0 gives hard edges. A light's height sets
+ * how long characters' shadows are: the higher it hangs, the shorter they
+ * are. Characters are about 48 pixels tall.
+ *
+ *   <light: Torch softness: 24>       softer shadows
+ *   <light: Lamp height: 200>         hung high: short shadows under people
+ *   <light: Candle shadows: off>      casts no shadows
+ *
+ * A light on top of a wall lights the wall around it and shines out of it.
+ *
+ * Events (note or page comment, the page comment winning):
+ *
+ *   <shadow>                         cast a shadow. Objects (images whose
+ *                                    names start with !) and tile images
+ *                                    need this; characters cast one anyway
+ *   <shadow: off>                    cast none
+ *   <shadow: width: 32 height: 64>   stretch the shadow to this size, in
+ *                                    pixels; normally it is the image's
+ *
+ * Maps (note):
+ *
+ *   <shadows: off>    no shadows on this map
+ *   <shadows: on>     shadows on this map, even with the Shadows parameter off
+ *
+ * Shadows are the slowest part of lighting on phones. If a map with many
+ * lights runs slowly, try <shadows: off> on it, or Light Quality: Quarter.
+ *
+ * ----------------------------------------------------------------------------
+ * Normal maps and ambient occlusion
+ * ----------------------------------------------------------------------------
+ *
+ * Give characters, tilesets and parallaxes depth by saving these images
+ * beside them, in the same folder, with the same name plus an ending:
+ *
+ *   Actor1.png            the image itself
+ *   Actor1_normal.png     its normal map (or _n): which way each pixel faces
+ *   Actor1_ao.png         its ambient occlusion map (or _occlusion, _o)
+ *
+ * Nothing else to set up: they are found by name. A tileset gets one map per
+ * sheet (World_A1_normal.png, World_B_normal.png, ...). Each map is the same
+ * size and layout as its image, frame for frame.
+ *
+ * Normal maps make light catch the sides of things facing it: bricks, folds
+ * and faces light up toward a torch and fall dark away from it. Images
+ * without one look exactly as before. A light's height (see "Shadows")
+ * sets how low it shines across them: low lights rake across surfaces,
+ * high ones light them more evenly.
+ *
+ * Normal maps are made "green up" (OpenGL style) by most tools, and that is
+ * what the plugin expects. If light seems to come from below, set Normal Map
+ * Green to "down".
+ *
+ * Ambient occlusion maps are greyscale: white is open, black is a deep
+ * crease. Light from lights sinks less far into creases. Neither map changes
+ * the ambient light (day and night, or a map's own): it lights every image
+ * evenly, as without maps, so by day images look as drawn. Keep open areas
+ * white: a map that is grey all over dims whatever a torch lights (or lower
+ * AO Strength).
+ *
+ * Auto Normal Maps (parameter) gives images without a normal map a rough
+ * one, worked out from their light and dark pixels. Try it on characters.
+ *
+ * After adding or removing these images, play-test once before deploying:
+ * the play-test saves the list of them to data/GH_LightingMaps.json, which
+ * browsers and phones need. When deploying, leave "Exclude unused files"
+ * unticked, or they are left out.
+ *
+ * ----------------------------------------------------------------------------
+ * Plugin commands
+ * ----------------------------------------------------------------------------
+ *
+ *   Set Global Light      fade the whole game's light level, e.g. to Night
+ *   Set Map Ambient       fade just this map's ambient
+ *   Reset Map Ambient     back to the map's <ambient>, or the global light
+ *   Set Event Light       change or turn off an event's light
+ *   Set Player Light      give the player a light (e.g. a Lantern), or "off"
+ *
+ * The global light and the player's light stay until changed again. Map
+ * ambient and event light changes last until the player leaves the map; use
+ * self switches and page comments for lights that should stay changed. All
+ * of these are kept in save files.
+ *
+ * ----------------------------------------------------------------------------
+ * Troubleshooting
+ * ----------------------------------------------------------------------------
+ *
+ * Press F8 during a play-test to open the console. Typos such as an unknown
+ * preset name or an unreadable colour are reported there, with the map and
+ * event they came from.
+ *
+ * The map isn't any darker: maps without an <ambient> tag follow the Global
+ * Light parameter, which is blank (fully lit) to start with.
+ *
+ * A light doesn't show: by day, most lights are no brighter than the light
+ * around them (see "Lights by day and by night"). Try <ambient: Night>.
+ *
+ * No lighting at all, and no errors: another plugin may build the map's
+ * sprites its own way. Place {{NAME}} below it in the Plugin Manager.
+ *
+ * Lighting covers the map: tiles, the parallax and characters. Weather,
+ * pictures, the timer, windows and battles are drawn as usual, unlit.
+ *
+ * ----------------------------------------------------------------------------
+ * Terms of use
+ * ----------------------------------------------------------------------------
+ *
+ * MIT licence: free to use in commercial and non-commercial games, and to
+ * change and share, as long as the licence notice at the top of this file
+ * stays with it. Credit to Goat Hollow Games is appreciated, not required.
+ *
+ * Updates, source and bug reports:
+ * https://github.com/goathollow/rpg-maker-lighting
+ *
+ * @param lightResolution
+ * @text Light Quality
+ * @desc Resolution of the light buffer. Lower is faster on phones and older PCs.
+ * @type select
+ * @option Full
+ * @value 1
+ * @option Half
+ * @value 0.5
+ * @option Quarter
+ * @value 0.25
+ * @default 0.5
+ *
+ * @param maxBrightness
+ * @text Max Brightness
+ * @desc How far lights may brighten the map beyond its drawn colours. 1 = not at all, 2 = up to double.
+ * @type number
+ * @decimals 2
+ * @min 1
+ * @max 2
+ * @default 1.25
+ *
+ * @param globalLight
+ * @text Global Light
+ * @desc The game's light level at the start, for maps without an <ambient> tag. A preset or colour. Blank = fully lit.
+ * @type combo
+{{AMBIENT_PRESET_OPTIONS}}
+ * @default
+ *
+ * @param playerLight
+ * @text Player Light
+ * @desc A light the player carries from the start, e.g. Lantern. Blank = none.
+ * @type string
+ * @default
+ *
+ * @param shadows
+ * @text Shadows
+ * @desc Whether lights cast shadows. A map's <shadows: on> or <shadows: off> note overrides this.
+ * @type boolean
+ * @default true
+ *
+ * @param wallShadows
+ * @parent shadows
+ * @text Walls Cast Shadows
+ * @desc Whether the tops of walls (A4) and roofs (A3) block light.
+ * @type boolean
+ * @default true
+ *
+ * @param shadowRegions
+ * @parent shadows
+ * @text Shadow Regions
+ * @desc Region IDs that block light like walls. Paint them over crates, tables, trees...
+ * @type number[]
+ * @min 1
+ * @max 255
+ * @default []
+ *
+ * @param shadowTerrainTags
+ * @parent shadows
+ * @text Shadow Terrain Tags
+ * @desc Terrain tags (Database > Tilesets) that block light like walls.
+ * @type number[]
+ * @min 1
+ * @max 7
+ * @default []
+ *
+ * @param characterShadows
+ * @parent shadows
+ * @text Character Shadows
+ * @desc Whether the player, followers and events cast shadows.
+ * @type boolean
+ * @default true
+ *
+ * @param surfaceMaps
+ * @text Normal & AO Maps
+ * @desc Whether images use the normal maps (_normal) and ambient occlusion maps (_ao) saved beside them.
+ * @type boolean
+ * @default true
+ *
+ * @param normalStrength
+ * @parent surfaceMaps
+ * @text Normal Map Strength
+ * @desc How deep normal maps look. 1 = as drawn, 0 = flat, 2 = twice as steep.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 3
+ * @default 1
+ *
+ * @param normalGreen
+ * @parent surfaceMaps
+ * @text Normal Map Green
+ * @desc Which way green points in your normal maps. Most tools: up. If light seems to come from below, try down.
+ * @type select
+ * @option up (OpenGL)
+ * @value up
+ * @option down (DirectX)
+ * @value down
+ * @default up
+ *
+ * @param aoStrength
+ * @parent surfaceMaps
+ * @text AO Strength
+ * @desc How dark ambient occlusion maps make creases. 1 = as drawn, 0 = not at all.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 1
+ * @default 1
+ *
+ * @param autoNormals
+ * @parent surfaceMaps
+ * @text Auto Normal Maps
+ * @desc Gives images without a normal map a rough one, from their light and dark pixels.
+ * @type select
+ * @option off
+ * @option characters
+ * @option tiles
+ * @option characters and tiles
+ * @value all
+ * @default off
+ *
+ * @param autoNormalStrength
+ * @parent autoNormals
+ * @text Auto Normal Strength
+ * @desc How deep auto normal maps look. 1 = moderate.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 3
+ * @default 1
+ *
+ * @param lightPresets
+ * @text Light Presets
+ * @desc Named lights for <light: Name> tags and commands.
+ * @type struct<LightPreset>[]
+ * @default {{LIGHT_PRESETS}}
+ *
+ * @param flickerPresets
+ * @text Flicker Presets
+ * @desc Named flicker styles for lights, e.g. <light: Lamp flicker: Fire>.
+ * @type struct<FlickerPreset>[]
+ * @default {{FLICKER_PRESETS}}
+ *
+ * @param ambientPresets
+ * @text Ambient Presets
+ * @desc Named colours for <ambient: Name> tags and commands.
+ * @type struct<AmbientPreset>[]
+ * @default {{AMBIENT_PRESETS}}
+ *
+ * @command setGlobalLight
+ * @text Set Global Light
+ * @desc Fades the light level of every map without an <ambient> tag. Stays until changed again.
+ *
+ * @arg color
+ * @text Preset or Color
+ * @desc An ambient preset name, or a colour: #303860 or 48,56,96. Day or off = fully lit.
+ * @type combo
+{{AMBIENT_PRESET_OPTIONS}}
+ * @default Night
+ *
+ * @arg duration
+ * @text Duration
+ * @desc Fade time in frames (60 = 1 second). 0 changes instantly.
+ * @type number
+ * @min 0
+ * @default 60
+ *
+ * @arg wait
+ * @text Wait for Completion
+ * @desc Whether the event waits for the fade to finish before its next command.
+ * @type boolean
+ * @default false
+ *
+ * @command setAmbient
+ * @text Set Map Ambient
+ * @desc Fades this map's ambient light, ignoring the global light. Lasts until the player leaves the map.
+ *
+ * @arg color
+ * @text Preset or Color
+ * @desc An ambient preset name, or a colour: #303860 or 48,56,96.
+ * @type combo
+{{AMBIENT_PRESET_OPTIONS}}
+ * @default Night
+ *
+ * @arg duration
+ * @text Duration
+ * @desc Fade time in frames (60 = 1 second). 0 changes instantly.
+ * @type number
+ * @min 0
+ * @default 60
+ *
+ * @arg wait
+ * @text Wait for Completion
+ * @desc Whether the event waits for the fade to finish before its next command.
+ * @type boolean
+ * @default false
+ *
+ * @command resetAmbient
+ * @text Reset Map Ambient
+ * @desc Fades back to the map's <ambient> tag, or to the global light for maps without one.
+ *
+ * @arg duration
+ * @text Duration
+ * @desc Fade time in frames (60 = 1 second). 0 changes instantly.
+ * @type number
+ * @min 0
+ * @default 60
+ *
+ * @arg wait
+ * @text Wait for Completion
+ * @desc Whether the event waits for the fade to finish before its next command.
+ * @type boolean
+ * @default false
+ *
+ * @command setEventLight
+ * @text Set Event Light
+ * @desc Changes an event's light until the player leaves the map.
+ *
+ * @arg eventId
+ * @text Event ID
+ * @desc The event to change. 0 = this event.
+ * @type number
+ * @min 0
+ * @default 0
+ *
+ * @arg light
+ * @text Light
+ * @desc A preset, optionally with changes (Torch radius: 240), or off. Blank = back to its <light> tags.
+ * @type combo
+{{LIGHT_PRESET_OPTIONS}}
+ * @option off
+ * @default Torch
+ *
+ * @command setPlayerLight
+ * @text Set Player Light
+ * @desc Gives the player a light, or takes it away.
+ *
+ * @arg light
+ * @text Light
+ * @desc A preset, optionally with changes (Lantern radius: 300), or off. Blank = the Player Light parameter.
+ * @type combo
+{{LIGHT_PRESET_OPTIONS}}
+ * @option off
+ * @default Lantern
+ */
+
+/*~struct~LightPreset:
+ * @param name
+ * @text Name
+ * @desc The name used in tags, e.g. <light: Torch>. Not case sensitive.
+ * @type string
+ * @default Light
+ *
+ * @param color
+ * @text Color
+ * @desc #rrggbb, or red,green,blue from 0-255.
+ * @type string
+ * @default #ffffff
+ *
+ * @param radius
+ * @text Radius
+ * @desc How far the light reaches, in pixels. A tile is 48.
+ * @type number
+ * @min 1
+ * @max 2000
+ * @default 144
+ *
+ * @param intensity
+ * @text Intensity
+ * @desc Brightness at the centre. 1 = the map's own colours; above 1 is brighter and still shows by day.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 4
+ * @default 1
+ *
+ * @param flicker
+ * @text Flicker
+ * @desc A flicker preset, or blank for a steady light.
+ * @type combo
+{{FLICKER_PRESET_OPTIONS}}
+ * @default
+ *
+ * @param shape
+ * @text Shape
+ * @desc point: a round glow. cone: a flashlight's spread, pointing its Direction. beam: a straight band of light, like sun through a window.
+ * @type select
+ * @option point
+ * @option cone
+ * @option beam
+ * @default point
+ *
+ * @param direction
+ * @text Direction
+ * @desc Cones and beams: facing (follows the character), up, down, left, right, or degrees clockwise from up.
+ * @type combo
+ * @option facing
+ * @option up
+ * @option down
+ * @option left
+ * @option right
+ * @default facing
+ *
+ * @param spread
+ * @text Cone Spread
+ * @desc Cones: how wide, in degrees.
+ * @type number
+ * @min 1
+ * @max 360
+ * @default 60
+ *
+ * @param width
+ * @text Beam Width
+ * @desc Beams: how wide, in pixels. A beam's Radius is its length.
+ * @type number
+ * @min 1
+ * @max 2000
+ * @default 48
+ *
+ * @param shadows
+ * @text Shadows
+ * @desc Whether this light casts shadows.
+ * @type boolean
+ * @default true
+ *
+ * @param softness
+ * @text Shadow Softness
+ * @desc How soft its shadows' edges are: the light's size in pixels. 0 = hard edges.
+ * @type number
+ * @min 0
+ * @max 48
+ * @default 8
+ *
+ * @param height
+ * @text Height
+ * @desc How high it hangs, in pixels. Higher = shorter shadows under characters, who are about 48 tall.
+ * @type number
+ * @min 0
+ * @max 2000
+ * @default 72
+ *
+ * @param offsetX
+ * @text Offset X
+ * @desc Moves the light right (or left, if negative), in pixels.
+ * @type number
+ * @min -1000
+ * @max 1000
+ * @default 0
+ *
+ * @param offsetY
+ * @text Offset Y
+ * @desc Moves the light down (or up, if negative), in pixels.
+ * @type number
+ * @min -1000
+ * @max 1000
+ * @default 0
+ */
+
+/*~struct~AmbientPreset:
+ * @param name
+ * @text Name
+ * @desc The name used in tags, e.g. <ambient: Night>. Not case sensitive.
+ * @type string
+ * @default Ambient
+ *
+ * @param color
+ * @text Color
+ * @desc #rrggbb, or red,green,blue from 0-255. White (#ffffff) is fully lit.
+ * @type string
+ * @default #ffffff
+ */
+
+/*~struct~FlickerPreset:
+ * @param name
+ * @text Name
+ * @desc The name used in tags, e.g. <light: Lamp flicker: Fire>. Not case sensitive.
+ * @type string
+ * @default Flicker
+ *
+ * @param slow
+ * @text Slow Strength
+ * @desc How far the overall level rises and falls, 0-1: the long, slow breathing of a fire.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 1
+ * @default 0.15
+ *
+ * @param slowSpeed
+ * @text Slow Speed
+ * @desc How many times a second the overall level changes.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 30
+ * @default 0.7
+ *
+ * @param fast
+ * @text Fast Strength
+ * @desc How strong the quick pops and crackle are, 0-1.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 1
+ * @default 0.1
+ *
+ * @param fastSpeed
+ * @text Fast Speed
+ * @desc How many pops a second.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 30
+ * @default 10
+ *
+ * @param sharpness
+ * @text Sharpness
+ * @desc 0 = a soft shimmer, 1 = sudden snaps.
+ * @type number
+ * @decimals 2
+ * @min 0
+ * @max 1
+ * @default 0.5
+ */
